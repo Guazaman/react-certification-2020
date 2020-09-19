@@ -2,7 +2,16 @@ import React from 'react';
 import { useHistory } from 'react-router';
 
 import { useAuth } from '../../providers/Auth';
-import './Login.styles.css';
+
+import {
+  LoginContainer,
+  LoginContainerElement,
+  LoginForm,
+  LoginFormInput,
+  LoginFormButton,
+  GuestButton,
+  LoginTitle,
+} from './Login.styled';
 
 function LoginPage() {
   const { login } = useAuth();
@@ -15,24 +24,19 @@ function LoginPage() {
   }
 
   return (
-    <section className="login">
-      <h1>Welcome back!</h1>
-      <form onSubmit={authenticate} className="login-form">
-        <div className="form-group">
-          <label htmlFor="username">
-            <strong>username </strong>
-            <input required type="text" id="username" />
-          </label>
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">
-            <strong>password </strong>
-            <input required type="password" id="password" />
-          </label>
-        </div>
-        <button type="submit">login</button>
-      </form>
-    </section>
+    <LoginContainer>
+      <LoginContainerElement>
+        <LoginTitle>Login</LoginTitle>
+        <LoginForm onSubmit={authenticate}>
+          <LoginFormInput type="text" name="name" placeholder="Username" />
+          <LoginFormInput type="password" name="name" placeholder="Password" />
+          <LoginFormButton type="submit" value="Submit" />
+        </LoginForm>
+      </LoginContainerElement>
+      <LoginContainerElement>
+        <GuestButton type="submit">Continue as a guest</GuestButton>
+      </LoginContainerElement>
+    </LoginContainer>
   );
 }
 
