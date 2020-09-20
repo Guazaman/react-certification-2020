@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../providers/Auth';
 import './Home.styles.css';
 
-import Login from '../Login';
+import Login from '../../components/Login';
 
 function HomePage() {
   const history = useHistory();
