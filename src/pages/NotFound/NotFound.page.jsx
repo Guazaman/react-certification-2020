@@ -1,17 +1,21 @@
+/* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import './NotFound.styles.css';
+import { NotFoundPNG } from '../../images';
 
-function NotFoundPage() {
+import { NotFoundImage, NotFoundText } from './NotFound.styled';
+
+const NotFoundPage = () => {
   return (
-    <section className="not-found">
-      <Link to="/" className="home-link">
-        home
+    <>
+      <NotFoundImage src={NotFoundPNG} />
+      <NotFoundText>Sorry, we couldn't find this Page.</NotFoundText>
+      <Link to="/">
+        <NotFoundText>Back To Home</NotFoundText>
       </Link>
-      <img src="404.gif" alt="page not found" />
-    </section>
+    </>
   );
-}
+};
 
 export default NotFoundPage;
