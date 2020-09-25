@@ -5,6 +5,7 @@ import AuthProvider from '../../providers/Auth';
 import HomePage from '../../pages/Home';
 import NotFound from '../../pages/NotFound';
 import SecretPage from '../../pages/Secret';
+import Dashboard from '../../pages/Dashboard';
 import Private from '../Private';
 import Layout from '../Layout';
 import { random } from '../../utils/fns';
@@ -39,6 +40,9 @@ function App() {
             <Private exact path="/secret">
               <SecretPage />
             </Private>
+            <Route exact path="/dashboard">
+              <Dashboard />
+            </Route>
             <Route path="*">
               <NotFound />
             </Route>
