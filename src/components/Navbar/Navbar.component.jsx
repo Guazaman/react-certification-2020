@@ -21,7 +21,7 @@ import {
   InputContainer,
 } from './Navbar.styled';
 
-export default function PrimarySearchAppBar() {
+const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [switchState, setswitchState] = React.useState(false);
 
@@ -85,4 +85,6 @@ export default function PrimarySearchAppBar() {
       </Menu>
     </>
   );
-}
+};
+
+export default Navbar;
