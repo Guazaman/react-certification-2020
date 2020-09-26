@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+// import { useHistory } from 'react-router';
 
 import { useAuth } from '../../providers/Auth';
 
@@ -15,12 +15,11 @@ import {
 
 function LoginPage() {
   const { login } = useAuth();
-  const history = useHistory();
+  // const history = useHistory();
 
   function authenticate(event) {
     event.preventDefault();
     login();
-    history.push('/secret');
   }
 
   return (

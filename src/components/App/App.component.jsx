@@ -1,53 +1,33 @@
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import AuthProvider from '../../providers/Auth';
 import HomePage from '../../pages/Home';
-import NotFound from '../../pages/NotFound';
-import SecretPage from '../../pages/Secret';
-import Dashboard from '../../pages/Dashboard';
+import NotFoundPage from '../../pages/NotFound';
+import FavoritesPage from '../../pages/Favorites';
+import VideoDetailsPage from '../../pages/VideoDetails';
+import Navbar from '../Navbar';
 import Private from '../Private';
-import Layout from '../Layout';
-import { random } from '../../utils/fns';
 
 function App() {
-  useLayoutEffect(() => {
-    const { body } = document;
-
-    function rotateBackground() {
-      const xPercent = random(100);
-      const yPercent = random(100);
-      body.style.setProperty('--bg-position', `${xPercent}% ${yPercent}%`);
-    }
-
-    const intervalId = setInterval(rotateBackground, 3000);
-    body.addEventListener('click', rotateBackground);
-
-    return () => {
-      clearInterval(intervalId);
-      body.removeEventListener('click', rotateBackground);
-    };
-  }, []);
-
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Layout>
-          <Switch>
-            <Route exact path="/">
-              <HomePage />
-            </Route>
-            <Private exact path="/secret">
-              <SecretPage />
-            </Private>
-            <Route exact path="/dashboard">
-              <Dashboard />
-            </Route>
-            <Route path="*">
-              <NotFound />
-            </Route>
-          </Switch>
-        </Layout>
+        <Navbar />
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Private exact path="/favorites">
+            <FavoritesPage />
+          </Private>
+          <Route exact path="/video-details">
+            <VideoDetailsPage />
+          </Route>
+          <Route path="*">
+            <NotFoundPage />
+          </Route>
+        </Switch>
       </AuthProvider>
     </BrowserRouter>
   );

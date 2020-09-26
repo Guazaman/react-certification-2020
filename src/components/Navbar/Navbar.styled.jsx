@@ -1,48 +1,31 @@
 import styled from 'styled-components';
 
-import { SearchIcon } from '../../icons';
-
-export const NavbarContainer = styled.div`
-  height: 65px;
+export const SearchIconContainer = styled.div`
+  height: 100%;
   display: flex;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  background-color: gold;
-  justify-content: space-between;
+  padding: 0px 16px;
+  position: absolute;
   align-items: center;
-`;
-
-export const NavbarItem = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const NavbarImage = styled.img`
-  height: 30px;
-`;
-
-export const InputSearch = styled.input`
-  height: 32px;
-  border: none;
-  border-radius: 10px;
-  margin-left: 20px;
-  background: url(${SearchIcon}) no-repeat scroll 6px 6px;
-  background-size: 20px;
-  padding-left: 35px;
-  background-color: white;
-`;
-
-export const NavbarButton = styled.button`
-  border: none;
-  background-color: transparent;
-  width: 50px;
-  height: 50px;
-  border-radius: 30px;
-  &:hover {
-    background-color: coral;
-  }
-  display: flex;
+  pointer-events: none;
   justify-content: center;
-  align-items: center;
+`;
+
+export const SearchInputContainer = styled.div`
+  width: auto;
+  position: relative;
+  margin-left: 16px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.15);
+`;
+
+export const Separator = styled.div`
+  flex-grow: 1;
+`;
+
+export const InputContainer = styled.div`
+  input {
+    padding: 8px 8px 8px 0px;
+    padding-left: calc(1em + 32px);
+    color: white;
+  }
 `;
