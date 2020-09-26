@@ -29,3 +29,17 @@ export const InputContainer = styled.div`
     color: white;
   }
 `;
+
+export const SideBarContainer = styled.div`
+  height: 100%;
+  width: 200px;
+  a {
+    color: inherit;
+    display: flex;
+    text-decoration: none;
+    padding: 8px 16px;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+`;
