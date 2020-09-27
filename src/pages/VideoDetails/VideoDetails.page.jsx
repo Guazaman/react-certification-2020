@@ -1,9 +1,9 @@
 /* eslint-disable react/button-has-type */
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import DetailsList from '../../components/DetailsList';
-import YoutubeApi from '../../api/YoutubeApi';
-
+import { useParams } from 'react-router-dom';
+import SearchContext from '../../State/SearchContext';
+import List from '../../components/List';
 import {
   VideoDetailsContainer,
   VideoDetailsCurrent,
@@ -15,34 +15,34 @@ import {
 } from './VideoDetails.styled';
 
 const VideoDetailsPage = () => {
-  const [state, setState] = React.useState(null);
+  const { currentVideo, favoritesVideos, setFavoritesVideos, videos } = React.useContext(
+    SearchContext
+  );
+  const { idVideo } = useParams();
 
-  const handleSubmit = async () => {
-    const response = await YoutubeApi.get('/search', {
-      params: {
-        q: 'wizeline',
-      },
-    });
-    setState({
-      videos: response.data.items,
-    });
+  const addToFavorites = () => {
+    setFavoritesVideos(() => [...favoritesVideos, currentVideo]);
   };
+
+  const {
+    snippet: { title, description },
+  } = currentVideo;
 
   return (
     <VideoDetailsContainer>
       <VideoDetailsCurrent>
-        <IFrameVideo src="https://www.youtube.com/embed/nmXMgqjQzls" />
+        <IFrameVideo src={`https://www.youtube.com/embed/${idVideo}`} />
         <CurrentOptionsContainer>
-          <CurrentVideoTitle>Titulo</CurrentVideoTitle>
-          <Button variant="contained" onClick={handleSubmit}>
+          <CurrentVideoTitle>{title}</CurrentVideoTitle>
+          <Button variant="contained" onClick={addToFavorites}>
             Add to Favorites
           </Button>
         </CurrentOptionsContainer>
-        <CurrentVideoDesc>This is a test description</CurrentVideoDesc>
+        <CurrentVideoDesc>{description}</CurrentVideoDesc>
       </VideoDetailsCurrent>
       <VideoDetailsList>
-        {state && state.videos ? (
-          <DetailsList videos={state.videos} />
+        {videos && videos.length ? (
+          <List videos={videos} detailsView />
         ) : (
           <p>Waiting...</p>
         )}

@@ -4,22 +4,35 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
+import SearchContext from '../../State/SearchContext';
 
-const ListCard = ({ title, description, url }) => {
+const ListCard = ({ title, description, url, idVideo }) => {
+  const { setCurrentVideo } = React.useContext(SearchContext);
+
+  const onListCardClick = () => {
+    setCurrentVideo({
+      snippet: { title, description, thumbnails: { high: { url } }, idVideo },
+      id: { idVideo },
+    });
+  };
+
   return (
-    <Card>
-      <CardActionArea>
-        <CardMedia component="img" height="140" image={url} />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {title}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <Link to={`/video-details/${idVideo}`}>
+      <Card onClick={onListCardClick}>
+        <CardActionArea>
+          <CardMedia component="img" height="140" image={url} />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {title}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {description}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Link>
   );
 };
 

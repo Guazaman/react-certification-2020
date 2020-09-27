@@ -1,26 +1,18 @@
 /* eslint-disable react/button-has-type */
 import React from 'react';
 import List from '../../components/List';
-import YoutubeApi from '../../api/YoutubeApi';
+import SearchContext from '../../State/SearchContext';
 
 const FavoritesPage = () => {
-  const [state, setState] = React.useState(null);
-
-  const handleSubmit = async () => {
-    const response = await YoutubeApi.get('/search', {
-      params: {
-        q: 'wizeline',
-      },
-    });
-    setState({
-      videos: response.data.items,
-    });
-  };
+  const { favoritesVideos } = React.useContext(SearchContext);
 
   return (
     <>
-      <button onClick={handleSubmit}> This is the favorites Page</button>
-      {state && state.videos ? <List videos={state.videos} /> : <p>Waiting...</p>}
+      {favoritesVideos && favoritesVideos.length ? (
+        <List videos={favoritesVideos} />
+      ) : (
+        <p>Waiting...</p>
+      )}
     </>
   );
 };

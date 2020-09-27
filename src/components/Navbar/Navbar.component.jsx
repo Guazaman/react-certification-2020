@@ -12,7 +12,6 @@ import Switch from '@material-ui/core/Switch';
 import Modal from '@material-ui/core/Modal';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -24,6 +23,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Link } from 'react-router-dom';
 
 import Login from '../Login';
+import SearchContext from '../../State/SearchContext';
+
+import { useAuth } from '../../providers/Auth';
 
 import {
   SearchIconContainer,
@@ -38,6 +40,8 @@ const Navbar = () => {
   const [switchState, setswitchState] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [sideBarstate, sideBarsetState] = React.useState(false);
+  const { getVideos } = React.useContext(SearchContext);
+  const { authenticated } = useAuth();
 
   const toggleDrawer = (sideBaropen) => () => {
     sideBarsetState(sideBaropen);
@@ -65,9 +69,15 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
+  const onKeyUp = (event) => {
+    if (event.key === 'Enter') {
+      getVideos(event.target.value);
+    }
+  };
+
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="static" style={{ background: '#FB503A' }}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -82,7 +92,7 @@ const Navbar = () => {
               <SearchIcon />
             </SearchIconContainer>
             <InputContainer>
-              <InputBase placeholder="Search…" />
+              <InputBase placeholder="Search…" onKeyPress={onKeyUp} />
             </InputContainer>
           </SearchInputContainer>
           <Separator />
@@ -112,7 +122,11 @@ const Navbar = () => {
         open={isMenuOpen}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={handleOpen}>Login</MenuItem>
+        {authenticated ? (
+          <MenuItem onClick={handleOpen}>Login</MenuItem>
+        ) : (
+          <MenuItem onClick={handleOpen}>Logout</MenuItem>
+        )}
       </Menu>
       <Modal
         open={open}

@@ -1,27 +1,14 @@
-/* eslint-disable react/button-has-type */
 import React from 'react';
 import List from '../../components/List';
-import YoutubeApi from '../../api/YoutubeApi';
+import SearchContext from '../../State/SearchContext';
+import { HomePageText } from './Home.styled';
 
 const HomePage = () => {
-  const [state, setState] = React.useState(null);
-
-  const handleSubmit = async () => {
-    const response = await YoutubeApi.get('/search', {
-      params: {
-        q: 'wizeline',
-      },
-    });
-    setState({
-      videos: response.data.items,
-    });
-  };
-
-  return (
-    <>
-      <button onClick={handleSubmit}> This is the Home Page</button>
-      {state && state.videos ? <List videos={state.videos} /> : <p>Waiting...</p>}
-    </>
+  const { videos } = React.useContext(SearchContext);
+  return videos && videos.length ? (
+    <List videos={videos} />
+  ) : (
+    <HomePageText>Please enter some search keyword</HomePageText>
   );
 };
 

@@ -1,39 +1,61 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, useHistory } from 'react-router-dom';
 
 import HomePage from '../../pages/Home';
 import NotFoundPage from '../../pages/NotFound';
 import FavoritesPage from '../../pages/Favorites';
 import VideoDetailsPage from '../../pages/VideoDetails';
-
 import AuthProvider from '../../providers/Auth';
-
 import Navbar from '../Navbar';
-
 import Private from '../Private';
 
-function App() {
+import SearchContext from '../../State/SearchContext';
+
+import YoutubeApi from '../../api/YoutubeApi';
+
+const App = () => {
+  const [currentVideo, setCurrentVideo] = React.useState(null);
+  const [favoritesVideos, setFavoritesVideos] = React.useState([]);
+  const [videos, setVideos] = React.useState(null);
+  const history = useHistory();
+
+  const getVideos = async (searchTerm) => {
+    const response = await YoutubeApi.get('/search', {
+      params: {
+        q: searchTerm,
+      },
+    });
+    setVideos(response.data.items);
+    // history.push('/');
+  };
+
+  console.log('fav', favoritesVideos);
+  console.log('currentVideo', currentVideo);
+
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Navbar />
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Private exact path="/favorites">
-            <FavoritesPage />
-          </Private>
-          <Route exact path="/video-details">
-            <VideoDetailsPage />
-          </Route>
-          <Route path="*">
-            <NotFoundPage />
-          </Route>
-        </Switch>
-      </AuthProvider>
-    </BrowserRouter>
+    <SearchContext.Provider
+      value={{
+        currentVideo,
+        setCurrentVideo,
+        videos,
+        getVideos,
+        favoritesVideos,
+        setFavoritesVideos,
+      }}
+    >
+      <BrowserRouter>
+        <AuthProvider>
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Private exact path="/favorites" component={FavoritesPage} />
+            <Route exact path="/video-details/:idVideo" component={VideoDetailsPage} />
+            <Route path="*" component={NotFoundPage} />
+          </Switch>
+        </AuthProvider>
+      </BrowserRouter>
+    </SearchContext.Provider>
   );
-}
+};
 
 export default App;
