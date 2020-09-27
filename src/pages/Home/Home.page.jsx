@@ -20,7 +20,7 @@ const HomePage = () => {
   return (
     <>
       <button onClick={handleSubmit}> This is the Home Page</button>
-      {state && state.videos ? <List props={state} /> : <p>Waiting...</p>}
+      {state && state.videos ? <List videos={state.videos} /> : <p>Waiting...</p>}
     </>
   );
 };
