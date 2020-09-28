@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import SearchContext from '../../State/SearchContext';
 import List from '../../components/List';
 import {
@@ -14,31 +14,39 @@ import {
 } from './VideoDetails.styled';
 
 const VideoDetailsPage = () => {
-  const { currentVideo, favoritesVideos, setFavoritesVideos } = React.useContext(
-    SearchContext
-  );
+  const { currentVideo, dispatch } = React.useContext(SearchContext);
   const { idVideo } = useParams();
   const videos = JSON.parse(localStorage.getItem('videos'));
 
   const addToFavorites = () => {
-    setFavoritesVideos(() => [...favoritesVideos, currentVideo]);
-    localStorage.setItem('favoritesVideos', JSON.stringify(favoritesVideos));
+    dispatch({
+      type: 'ADD_FAVORITE',
+      payload: currentVideo,
+    });
   };
 
   const removeToFavorites = () => {
-    setFavoritesVideos(() => {
-      return favoritesVideos.filter((item) => item.id !== currentVideo.id);
+    dispatch({
+      type: 'REMOVE_FAVORITE',
+      payload: {
+        idVideo,
+      },
     });
-    localStorage.setItem('favoritesVideos', JSON.stringify(favoritesVideos));
   };
+
+  const favorite = false;
+
+  const history = useHistory();
+
+  const notValidVideo = { snippet: { title: 'null', description: 'null' } };
 
   const {
     snippet: { title, description },
-  } = currentVideo;
+  } = currentVideo || notValidVideo;
 
-  const handleCheck = () => {
-    return favoritesVideos.some((item) => currentVideo.id === item.id);
-  };
+  if (currentVideo === null) {
+    history.push('/');
+  }
 
   return (
     <VideoDetailsContainer>
@@ -46,7 +54,7 @@ const VideoDetailsPage = () => {
         <IFrameVideo src={`https://www.youtube.com/embed/${idVideo}`} />
         <CurrentOptionsContainer>
           <CurrentVideoTitle>{title}</CurrentVideoTitle>
-          {handleCheck() ? (
+          {favorite ? (
             <Button variant="contained" onClick={removeToFavorites}>
               Remove to Favorites
             </Button>

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
-export const HomePageText = styled.h1`
-  text-align: center;
+export const SpinnerContainer = styled.h1`
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
 `;

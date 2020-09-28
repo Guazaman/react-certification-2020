@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-
 import HomePage from '../../pages/Home';
 import NotFoundPage from '../../pages/NotFound';
 import FavoritesPage from '../../pages/Favorites';
@@ -8,15 +7,14 @@ import VideoDetailsPage from '../../pages/VideoDetails';
 import AuthProvider from '../../providers/Auth';
 import Navbar from '../Navbar';
 import Private from '../Private';
-
 import SearchContext from '../../State/SearchContext';
-
 import YoutubeApi from '../../api/YoutubeApi';
+import FavoritesReducer from '../../State/SearchContext.reducer';
 
 const App = () => {
   const [currentVideo, setCurrentVideo] = React.useState(null);
-  const [favoritesVideos, setFavoritesVideos] = React.useState([]);
   const [videos, setVideos] = React.useState(null);
+  const [favoritesVideos, dispatch] = React.useReducer(FavoritesReducer, []);
 
   const getVideos = async (searchTerm) => {
     const response = await YoutubeApi.get('/search', {
@@ -28,6 +26,10 @@ const App = () => {
     localStorage.setItem('videos', JSON.stringify(response.data.items));
   };
 
+  React.useEffect(() => {
+    getVideos('wizeline');
+  }, []);
+
   return (
     <SearchContext.Provider
       value={{
@@ -36,7 +38,7 @@ const App = () => {
         videos,
         getVideos,
         favoritesVideos,
-        setFavoritesVideos,
+        dispatch,
       }}
     >
       <BrowserRouter>

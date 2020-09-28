@@ -1,16 +1,26 @@
-/* eslint-disable react/button-has-type */
 import React from 'react';
 import List from '../../components/List';
+import { FavoritesTextContainer } from './Favorites.styled';
+import SearchContext from '../../State/SearchContext';
 
 const FavoritesPage = () => {
-  const favoritesVideos = JSON.parse(localStorage.getItem('favoritesVideos'));
+  const { favoritesVideos, dispatch } = React.useContext(SearchContext);
+
+  React.useEffect(() => {
+    dispatch({ type: 'LOAD_FROM_STORAGE' });
+  }, [dispatch]);
 
   return (
     <>
-      {favoritesVideos && favoritesVideos.length ? (
-        <List videos={favoritesVideos} />
+      {favoritesVideos.favorites && favoritesVideos.favorites.length ? (
+        <List videos={favoritesVideos.favorites} />
       ) : (
-        <p>Waiting...</p>
+        <FavoritesTextContainer>
+          <h1>No items yet.</h1>
+          <p>
+            When you find a video you like, click Add to Favorites button to see it here.
+          </p>
+        </FavoritesTextContainer>
       )}
     </>
   );

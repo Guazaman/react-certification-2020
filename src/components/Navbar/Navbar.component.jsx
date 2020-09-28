@@ -1,5 +1,4 @@
 import React from 'react';
-
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,13 +11,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useAuth } from '../../providers/Auth';
-
 import SearchContext from '../../State/SearchContext';
 
 import {
@@ -31,6 +28,8 @@ import {
 } from './Navbar.styled';
 
 const Navbar = () => {
+  const location = useLocation();
+  const { pathname } = location;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [sideBarstate, sideBarsetState] = React.useState(false);
   const { getVideos } = React.useContext(SearchContext);
@@ -84,14 +83,16 @@ const Navbar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <SearchInputContainer>
-            <SearchIconContainer>
-              <SearchIcon />
-            </SearchIconContainer>
-            <InputContainer>
-              <InputBase placeholder="Search…" onKeyPress={onKeyUp} />
-            </InputContainer>
-          </SearchInputContainer>
+          {pathname === '/' ? (
+            <SearchInputContainer>
+              <SearchIconContainer>
+                <SearchIcon />
+              </SearchIconContainer>
+              <InputContainer>
+                <InputBase placeholder="Search…" onKeyPress={onKeyUp} />
+              </InputContainer>
+            </SearchInputContainer>
+          ) : null}
           <Separator />
           <IconButton
             edge="end"
