@@ -49,7 +49,7 @@ const VideoDetailsPage = () => {
       favoritesVideos.favorites.length > 0 &&
       favoritesVideos.favorites.some((video) => video.id.videoId === videoId);
     setFavorite(favorite);
-  }, []);
+  }, [videoId]);
 
   const history = useHistory();
 
