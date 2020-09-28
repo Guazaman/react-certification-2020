@@ -43,3 +43,8 @@ export const SideBarContainer = styled.div`
     }
   }
 `;
+
+export const UserIcon = styled.img`
+  width: 40px;
+  height: 40px;
+`;

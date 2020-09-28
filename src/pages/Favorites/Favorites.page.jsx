@@ -1,10 +1,9 @@
 /* eslint-disable react/button-has-type */
 import React from 'react';
 import List from '../../components/List';
-import SearchContext from '../../State/SearchContext';
 
 const FavoritesPage = () => {
-  const { favoritesVideos } = React.useContext(SearchContext);
+  const favoritesVideos = JSON.parse(localStorage.getItem('favoritesVideos'));
 
   return (
     <>

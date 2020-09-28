@@ -6,10 +6,6 @@ import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import Modal from '@material-ui/core/Modal';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -20,12 +16,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { Link } from 'react-router-dom';
-
-import Login from '../Login';
-import SearchContext from '../../State/SearchContext';
-
+import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../providers/Auth';
+
+import SearchContext from '../../State/SearchContext';
 
 import {
   SearchIconContainer,
@@ -33,36 +27,22 @@ import {
   Separator,
   InputContainer,
   SideBarContainer,
+  UserIcon,
 } from './Navbar.styled';
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [switchState, setswitchState] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
   const [sideBarstate, sideBarsetState] = React.useState(false);
   const { getVideos } = React.useContext(SearchContext);
-  const { authenticated } = useAuth();
 
   const toggleDrawer = (sideBaropen) => () => {
     sideBarsetState(sideBaropen);
   };
 
-  const handleOpen = () => {
-    setOpen(true);
-    setAnchorEl(null);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
   const isMenuOpen = Boolean(anchorEl);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
-  };
-
-  const handleSwitch = (event) => {
-    setswitchState(event.target.checked);
   };
 
   const handleMenuClose = () => {
@@ -74,6 +54,23 @@ const Navbar = () => {
       getVideos(event.target.value);
     }
   };
+
+  const history = useHistory();
+  const { authenticated, logout, login } = useAuth();
+
+  function deAuthenticate(event) {
+    event.preventDefault();
+    logout();
+    history.push('/');
+    handleMenuClose();
+  }
+
+  function authenticate(event) {
+    event.preventDefault();
+    login();
+    history.push('/');
+    handleMenuClose();
+  }
 
   return (
     <>
@@ -96,12 +93,6 @@ const Navbar = () => {
             </InputContainer>
           </SearchInputContainer>
           <Separator />
-          <FormGroup row>
-            <FormControlLabel
-              control={<Switch checked={switchState} onChange={handleSwitch} />}
-              label="Dark Mode"
-            />
-          </FormGroup>
           <IconButton
             edge="end"
             aria-controls="primary-search-account-menu"
@@ -109,7 +100,11 @@ const Navbar = () => {
             onClick={handleProfileMenuOpen}
             color="inherit"
           >
-            <AccountCircle />
+            {authenticated ? (
+              <UserIcon src="https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png" />
+            ) : (
+              <AccountCircle />
+            )}
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -123,19 +118,11 @@ const Navbar = () => {
         onClose={handleMenuClose}
       >
         {authenticated ? (
-          <MenuItem onClick={handleOpen}>Login</MenuItem>
+          <MenuItem onClick={deAuthenticate}>Logout</MenuItem>
         ) : (
-          <MenuItem onClick={handleOpen}>Logout</MenuItem>
+          <MenuItem onClick={authenticate}>Login</MenuItem>
         )}
       </Menu>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        <Login />
-      </Modal>
       <Drawer open={sideBarstate} onClose={toggleDrawer(false)}>
         <SideBarContainer onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
           <List>
@@ -145,12 +132,14 @@ const Navbar = () => {
               </ListItemIcon>
               <ListItemText primary="Home" />
             </Link>
-            <Link to="/favorites">
-              <ListItemIcon>
-                <FavoriteIcon />
-              </ListItemIcon>
-              <ListItemText primary="Favorites" />
-            </Link>
+            {authenticated ? (
+              <Link to="/favorites">
+                <ListItemIcon>
+                  <FavoriteIcon />
+                </ListItemIcon>
+                <ListItemText primary="Favorites" />
+              </Link>
+            ) : null}
           </List>
         </SideBarContainer>
       </Drawer>

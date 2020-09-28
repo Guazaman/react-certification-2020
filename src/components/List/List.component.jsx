@@ -6,7 +6,6 @@ import DetailsListListCard from '../DetailsListCard';
 import { ListContainer } from './List.styled';
 
 const List = ({ videos, detailsView }) => {
-  console.log('videos en favoritos', videos);
   return (
     <ListContainer>
       <Grid container spacing={3}>

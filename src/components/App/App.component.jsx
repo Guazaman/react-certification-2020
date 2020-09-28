@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, useHistory } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import HomePage from '../../pages/Home';
 import NotFoundPage from '../../pages/NotFound';
@@ -17,7 +17,6 @@ const App = () => {
   const [currentVideo, setCurrentVideo] = React.useState(null);
   const [favoritesVideos, setFavoritesVideos] = React.useState([]);
   const [videos, setVideos] = React.useState(null);
-  const history = useHistory();
 
   const getVideos = async (searchTerm) => {
     const response = await YoutubeApi.get('/search', {
@@ -26,11 +25,8 @@ const App = () => {
       },
     });
     setVideos(response.data.items);
-    // history.push('/');
+    localStorage.setItem('videos', JSON.stringify(response.data.items));
   };
-
-  console.log('fav', favoritesVideos);
-  console.log('currentVideo', currentVideo);
 
   return (
     <SearchContext.Provider

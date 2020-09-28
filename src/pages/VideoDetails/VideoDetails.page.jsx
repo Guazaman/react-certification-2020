@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { useParams } from 'react-router-dom';
@@ -15,18 +14,31 @@ import {
 } from './VideoDetails.styled';
 
 const VideoDetailsPage = () => {
-  const { currentVideo, favoritesVideos, setFavoritesVideos, videos } = React.useContext(
+  const { currentVideo, favoritesVideos, setFavoritesVideos } = React.useContext(
     SearchContext
   );
   const { idVideo } = useParams();
+  const videos = JSON.parse(localStorage.getItem('videos'));
 
   const addToFavorites = () => {
     setFavoritesVideos(() => [...favoritesVideos, currentVideo]);
+    localStorage.setItem('favoritesVideos', JSON.stringify(favoritesVideos));
+  };
+
+  const removeToFavorites = () => {
+    setFavoritesVideos(() => {
+      return favoritesVideos.filter((item) => item.id !== currentVideo.id);
+    });
+    localStorage.setItem('favoritesVideos', JSON.stringify(favoritesVideos));
   };
 
   const {
     snippet: { title, description },
   } = currentVideo;
+
+  const handleCheck = () => {
+    return favoritesVideos.some((item) => currentVideo.id === item.id);
+  };
 
   return (
     <VideoDetailsContainer>
@@ -34,9 +46,15 @@ const VideoDetailsPage = () => {
         <IFrameVideo src={`https://www.youtube.com/embed/${idVideo}`} />
         <CurrentOptionsContainer>
           <CurrentVideoTitle>{title}</CurrentVideoTitle>
-          <Button variant="contained" onClick={addToFavorites}>
-            Add to Favorites
-          </Button>
+          {handleCheck() ? (
+            <Button variant="contained" onClick={removeToFavorites}>
+              Remove to Favorites
+            </Button>
+          ) : (
+            <Button variant="contained" onClick={addToFavorites}>
+              Add to Favorites
+            </Button>
+          )}
         </CurrentOptionsContainer>
         <CurrentVideoDesc>{description}</CurrentVideoDesc>
       </VideoDetailsCurrent>
