@@ -12,7 +12,7 @@ const FavoritesReducer = (favoritesVideos, action) => {
     }
     case 'REMOVE_FAVORITE': {
       const favorites = favoritesVideos.favorites.filter(
-        (video) => video.videoId !== action.payload.videoId
+        (video) => video.id.videoId !== action.payload.videoId
       );
       localStorage.setItem('favorite_videos', JSON.stringify(favorites));
       return {
@@ -23,7 +23,6 @@ const FavoritesReducer = (favoritesVideos, action) => {
     case 'LOAD_FROM_STORAGE': {
       let favorites = localStorage.getItem('favorite_videos') || [];
       favorites = favorites.length ? JSON.parse(favorites) : [];
-      console.log(favorites);
       return {
         ...favoritesVideos,
         favorites,

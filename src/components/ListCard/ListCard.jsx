@@ -7,18 +7,18 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import SearchContext from '../../State/SearchContext';
 
-const ListCard = ({ title, description, url, idVideo }) => {
+const ListCard = ({ title, description, url, videoId }) => {
   const { setCurrentVideo } = React.useContext(SearchContext);
 
   const onListCardClick = () => {
     setCurrentVideo({
-      snippet: { title, description, thumbnails: { high: { url } }, idVideo },
-      id: { idVideo },
+      snippet: { title, description, thumbnails: { high: { url } }, videoId },
+      id: { videoId },
     });
   };
 
   return (
-    <Link to={`/video-details/${idVideo}`}>
+    <Link to={`/video-details/${videoId}`}>
       <Card onClick={onListCardClick}>
         <CardActionArea>
           <CardMedia component="img" height="140" image={url} />

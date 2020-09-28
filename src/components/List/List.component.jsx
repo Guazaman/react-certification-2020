@@ -20,24 +20,23 @@ const List = ({ videos, detailsView }) => {
             id,
           } = video;
 
-          const idVideo = id.videoId ? id.videoId : id.channelId;
-
+          const videoId = id.videoId ? id.videoId : id.channelId;
           return !detailsView ? (
-            <Grid item xs={12} md={4} key={idVideo}>
+            <Grid item xs={12} md={4} key={videoId}>
               <ListCard
                 title={title}
                 description={description}
                 url={url}
-                idVideo={idVideo}
+                videoId={videoId}
               />
             </Grid>
           ) : (
-            <Grid item xs={12} md={12} key={idVideo}>
+            <Grid item xs={12} md={12} key={videoId}>
               <DetailsListListCard
                 title={title}
                 description={description}
                 url={url}
-                idVideo={idVideo}
+                videoId={videoId}
               />
             </Grid>
           );

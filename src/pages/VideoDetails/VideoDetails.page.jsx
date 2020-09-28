@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button';
 import { useParams, useHistory } from 'react-router-dom';
 import SearchContext from '../../State/SearchContext';
 import List from '../../components/List';
+import { useAuth } from '../../providers/Auth';
+
 import {
   VideoDetailsContainer,
   VideoDetailsCurrent,
@@ -14,8 +16,11 @@ import {
 } from './VideoDetails.styled';
 
 const VideoDetailsPage = () => {
-  const { currentVideo, dispatch } = React.useContext(SearchContext);
-  const { idVideo } = useParams();
+  const { currentVideo, dispatch, favoritesVideos } = React.useContext(SearchContext);
+  const { videoId } = useParams();
+  const [isFavorite, setFavorite] = React.useState(false);
+  const { authenticated } = useAuth();
+
   const videos = JSON.parse(localStorage.getItem('videos'));
 
   const addToFavorites = () => {
@@ -23,18 +28,28 @@ const VideoDetailsPage = () => {
       type: 'ADD_FAVORITE',
       payload: currentVideo,
     });
+    setFavorite(true);
   };
 
   const removeToFavorites = () => {
     dispatch({
       type: 'REMOVE_FAVORITE',
       payload: {
-        idVideo,
+        videoId,
       },
     });
+    setFavorite(false);
   };
 
-  const favorite = false;
+  React.useEffect(() => {
+    dispatch({ type: 'LOAD_FROM_STORAGE' });
+    const favorite =
+      authenticated &&
+      favoritesVideos.favorites &&
+      favoritesVideos.favorites.length > 0 &&
+      favoritesVideos.favorites.some((video) => video.id.videoId === videoId);
+    setFavorite(favorite);
+  }, []);
 
   const history = useHistory();
 
@@ -51,12 +66,12 @@ const VideoDetailsPage = () => {
   return (
     <VideoDetailsContainer>
       <VideoDetailsCurrent>
-        <IFrameVideo src={`https://www.youtube.com/embed/${idVideo}`} />
+        <IFrameVideo src={`https://www.youtube.com/embed/${videoId}`} />
         <CurrentOptionsContainer>
           <CurrentVideoTitle>{title}</CurrentVideoTitle>
-          {favorite ? (
+          {isFavorite ? (
             <Button variant="contained" onClick={removeToFavorites}>
-              Remove to Favorites
+              Remove from Favorites
             </Button>
           ) : (
             <Button variant="contained" onClick={addToFavorites}>

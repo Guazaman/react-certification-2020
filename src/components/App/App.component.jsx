@@ -30,6 +30,10 @@ const App = () => {
     getVideos('wizeline');
   }, []);
 
+  React.useEffect(() => {
+    dispatch({ type: 'LOAD_FROM_STORAGE' });
+  }, [dispatch]);
+
   return (
     <SearchContext.Provider
       value={{
@@ -47,7 +51,7 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Private exact path="/favorites" component={FavoritesPage} />
-            <Route exact path="/video-details/:idVideo" component={VideoDetailsPage} />
+            <Route exact path="/video-details/:videoId" component={VideoDetailsPage} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </AuthProvider>
