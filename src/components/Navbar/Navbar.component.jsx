@@ -16,7 +16,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useAuth } from '../../providers/Auth';
-import SearchContext from '../../State/SearchContext';
+import SearchContext from '../../state/SearchContext';
 
 import {
   SearchIconContainer,

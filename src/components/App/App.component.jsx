@@ -7,9 +7,9 @@ import VideoDetailsPage from '../../pages/VideoDetails';
 import AuthProvider from '../../providers/Auth';
 import Navbar from '../Navbar';
 import Private from '../Private';
-import SearchContext from '../../State/SearchContext';
+import SearchContext from '../../state/SearchContext';
 import YoutubeApi from '../../api/YoutubeApi';
-import FavoritesReducer from '../../State/SearchContext.reducer';
+import FavoritesReducer from '../../state/SearchContext.reducer';
 
 const App = () => {
   const [currentVideo, setCurrentVideo] = React.useState(null);

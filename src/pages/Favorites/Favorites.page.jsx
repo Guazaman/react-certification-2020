@@ -1,7 +1,7 @@
 import React from 'react';
 import List from '../../components/List';
 import { FavoritesTextContainer } from './Favorites.styled';
-import SearchContext from '../../State/SearchContext';
+import SearchContext from '../../state/SearchContext';
 
 const FavoritesPage = () => {
   const { favoritesVideos, dispatch } = React.useContext(SearchContext);

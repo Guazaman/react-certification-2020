@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { useParams, useHistory } from 'react-router-dom';
-import SearchContext from '../../State/SearchContext';
+import SearchContext from '../../state/SearchContext';
 import List from '../../components/List';
 import { useAuth } from '../../providers/Auth';
 
