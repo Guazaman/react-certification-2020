@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react';
+import React, { useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import { useParams, useHistory } from 'react-router-dom';
 import SearchContext from '../../state/SearchContext';
@@ -17,7 +17,7 @@ import {
 } from './VideoDetails.styled';
 
 const VideoDetailsPage = () => {
-  const { currentVideo, dispatch, favoritesVideos } = React.useContext(SearchContext);
+  const { currentVideo, dispatch, favoritesVideos } = useContext(SearchContext);
   const { videoId } = useParams();
   const [isFavorite, setFavorite] = React.useState(false);
   const { authenticated } = useAuth();

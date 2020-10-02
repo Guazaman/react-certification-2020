@@ -1,20 +1,15 @@
-import React from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import HomePage from '../../pages/Home';
-import NotFoundPage from '../../pages/NotFound';
-import FavoritesPage from '../../pages/Favorites';
-import VideoDetailsPage from '../../pages/VideoDetails';
+import { NavbarComponent, PrivateComponent } from '../index';
+import { HomePage, NotFoundPage, FavoritesPage, VideoDetailsPage } from '../../pages';
 import AuthProvider from '../../providers/Auth';
-import Navbar from '../Navbar';
-import Private from '../Private';
-import SearchContext from '../../state/SearchContext';
 import YoutubeApi from '../../api/YoutubeApi';
-import FavoritesReducer from '../../state/SearchContext.reducer';
+import { SearchContext, FavoritesReducer } from '../../state';
 
 const App = () => {
-  const [currentVideo, setCurrentVideo] = React.useState(null);
-  const [videos, setVideos] = React.useState(null);
-  const [favoritesVideos, dispatch] = React.useReducer(FavoritesReducer, []);
+  const [currentVideo, setCurrentVideo] = useState(null);
+  const [videos, setVideos] = useState(null);
+  const [favoritesVideos, dispatch] = useReducer(FavoritesReducer, []);
 
   const getVideos = async (searchTerm) => {
     const response = await YoutubeApi.get('/search', {
@@ -26,11 +21,11 @@ const App = () => {
     localStorage.setItem('videos', JSON.stringify(response.data.items));
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     getVideos('wizeline');
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch({ type: 'LOAD_FROM_STORAGE' });
   }, [dispatch]);
 
@@ -47,10 +42,12 @@ const App = () => {
     >
       <BrowserRouter>
         <AuthProvider>
-          <Navbar />
+          <NavbarComponent />
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Private exact path="/favorites" component={FavoritesPage} />
+            <PrivateComponent exact path="/favorites">
+              <FavoritesPage />
+            </PrivateComponent>
             <Route exact path="/video-details/:videoId" component={VideoDetailsPage} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
