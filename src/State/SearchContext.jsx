@@ -4,7 +4,7 @@ const SearchContext = React.createContext({
   videos: [],
   currentVideo: {},
   favoritesVideos: [],
-  getVideos: () => {},
+  searchVideos: () => {},
   setCurrentVideo: () => {},
   setFavoritesVideos: () => {},
 });

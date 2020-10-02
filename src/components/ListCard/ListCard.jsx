@@ -1,12 +1,14 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import SearchContext from '../../state/SearchContext';
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Typography,
+  Grid,
+} from '@material-ui/core';
+import { SearchContext } from '../../state';
 import { CardContainer, CardImage, CardTitle } from './ListCard.styles';
 
 const ListCard = ({ title, description, url, videoId, detailsView }) => {
@@ -20,7 +22,7 @@ const ListCard = ({ title, description, url, videoId, detailsView }) => {
   };
 
   return (
-    <Grid item xs={12} md={detailsView ? 12 : 4} key={videoId}>
+    <Grid item xs={12} md={detailsView ? 12 : 4}>
       <Link to={`/video-details/${videoId}`}>
         {detailsView ? (
           <CardContainer onClick={onListCardClick}>

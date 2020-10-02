@@ -11,7 +11,7 @@ const App = () => {
   const [videos, setVideos] = useState(null);
   const [favoritesVideos, dispatch] = useReducer(FavoritesReducer, []);
 
-  const getVideos = async (searchTerm) => {
+  const searchVideos = async (searchTerm) => {
     const response = await YoutubeApi.get('/search', {
       params: {
         q: searchTerm,
@@ -22,7 +22,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    getVideos('wizeline');
+    searchVideos('wizeline');
   }, []);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const App = () => {
         currentVideo,
         setCurrentVideo,
         videos,
-        getVideos,
+        searchVideos,
         favoritesVideos,
         dispatch,
       }}

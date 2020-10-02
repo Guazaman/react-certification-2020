@@ -1,13 +1,13 @@
 import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import List from '../../components/List';
-import SearchContext from '../../state/SearchContext';
+import { CircularProgress } from '@material-ui/core';
 import { SpinnerContainer } from './Home.styled';
+import { ListComponent } from '../../components';
+import { SearchContext } from '../../state';
 
 const HomePage = () => {
   const { videos } = React.useContext(SearchContext);
   return videos && videos.length ? (
-    <List videos={videos} />
+    <ListComponent videos={videos} />
   ) : (
     <SpinnerContainer>
       <CircularProgress />

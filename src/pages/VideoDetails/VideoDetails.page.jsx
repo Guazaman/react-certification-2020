@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext } from 'react';
-import Button from '@material-ui/core/Button';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import SearchContext from '../../state/SearchContext';
-import List from '../../components/List';
+import { Button } from '@material-ui/core';
+import { SearchContext } from '../../state';
+import { ListComponent } from '../../components';
 import { useAuth } from '../../providers/Auth';
-
 import {
   VideoDetailsContainer,
   VideoDetailsCurrent,
@@ -17,12 +16,26 @@ import {
 } from './VideoDetails.styled';
 
 const VideoDetailsPage = () => {
+  const history = useHistory();
+  const videos = JSON.parse(localStorage.getItem('videos'));
+  const defaultVideo = { snippet: { title: '', description: '' } };
   const { currentVideo, dispatch, favoritesVideos } = useContext(SearchContext);
+  const [isFavorite, setFavorite] = useState(false);
   const { videoId } = useParams();
-  const [isFavorite, setFavorite] = React.useState(false);
   const { authenticated } = useAuth();
 
-  const videos = JSON.parse(localStorage.getItem('videos'));
+  const {
+    snippet: { title, description },
+  } = currentVideo || defaultVideo;
+
+  const checkFavorite = () => {
+    return (
+      authenticated &&
+      favoritesVideos.favorites &&
+      favoritesVideos.favorites.length &&
+      favoritesVideos.favorites.some((video) => video.id.videoId === videoId)
+    );
+  };
 
   const addToFavorites = () => {
     dispatch({
@@ -42,23 +55,10 @@ const VideoDetailsPage = () => {
     setFavorite(false);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch({ type: 'LOAD_FROM_STORAGE' });
-    const favorite =
-      authenticated &&
-      favoritesVideos.favorites &&
-      favoritesVideos.favorites.length > 0 &&
-      favoritesVideos.favorites.some((video) => video.id.videoId === videoId);
-    setFavorite(favorite);
+    setFavorite(checkFavorite);
   }, [videoId]);
-
-  const history = useHistory();
-
-  const notValidVideo = { snippet: { title: 'null', description: 'null' } };
-
-  const {
-    snippet: { title, description },
-  } = currentVideo || notValidVideo;
 
   if (currentVideo === null) {
     history.push('/');
@@ -83,11 +83,7 @@ const VideoDetailsPage = () => {
         <CurrentVideoDesc>{description}</CurrentVideoDesc>
       </VideoDetailsCurrent>
       <VideoDetailsList>
-        {videos && videos.length ? (
-          <List videos={videos} detailsView />
-        ) : (
-          <p>Waiting...</p>
-        )}
+        <ListComponent videos={videos} detailsView />
       </VideoDetailsList>
     </VideoDetailsContainer>
   );

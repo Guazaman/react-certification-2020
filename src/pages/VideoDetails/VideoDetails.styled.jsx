@@ -24,7 +24,8 @@ export const CurrentOptionsContainer = styled.div`
   justify-content: space-between;
   button {
     height: fit-content;
-    width: 25%;
+    width: 30%;
+    min-width: 30%;
     margin-top: 10px;
   }
 `;
