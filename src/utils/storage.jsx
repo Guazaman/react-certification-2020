@@ -14,4 +14,4 @@ const storage = {
   },
 };
 
-export { storage };
+export default storage;

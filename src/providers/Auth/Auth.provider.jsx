@@ -1,16 +1,9 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 
 import { AUTH_STORAGE_KEY } from '../../utils/constants';
-import { storage } from '../../utils/storage';
+import Storage from '../../utils/storage';
 
 const AuthContext = React.createContext(null);
-
-const mockedUser = {
-  id: '123',
-  name: 'Wizeline',
-  avatarUrl:
-    'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
-};
 
 function useAuth() {
   const context = useContext(AuthContext);
@@ -24,7 +17,7 @@ function AuthProvider({ children }) {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    const lastAuthState = storage.get(AUTH_STORAGE_KEY);
+    const lastAuthState = Storage.get(AUTH_STORAGE_KEY);
     const isAuthenticated = Boolean(lastAuthState);
 
     setAuthenticated(isAuthenticated);
@@ -32,14 +25,12 @@ function AuthProvider({ children }) {
 
   const login = useCallback(() => {
     setAuthenticated(true);
-    storage.set(AUTH_STORAGE_KEY, true);
-    storage.set('user', mockedUser);
+    Storage.set(AUTH_STORAGE_KEY, true);
   }, []);
 
   const logout = useCallback(() => {
     setAuthenticated(false);
-    storage.set(AUTH_STORAGE_KEY, false);
-    storage.set('user', {});
+    Storage.set(AUTH_STORAGE_KEY, false);
   }, []);
 
   return (
