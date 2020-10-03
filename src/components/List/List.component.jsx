@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { ListCardComponent } from '../index';
 import { ListContainer } from './List.styled';
+import { ListCardComponent } from '../index';
 
 const List = ({ videos, detailsView }) => {
   return (

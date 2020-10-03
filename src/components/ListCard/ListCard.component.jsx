@@ -8,8 +8,8 @@ import {
   Typography,
   Grid,
 } from '@material-ui/core';
+import { CardContainer, CardImage, CardTitle } from './ListCard.styled';
 import { SearchContext } from '../../state';
-import { CardContainer, CardImage, CardTitle } from './ListCard.styles';
 
 const ListCard = ({ title, description, url, videoId, detailsView }) => {
   const { setCurrentVideo } = React.useContext(SearchContext);

@@ -1,7 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Drawer, List, ListItemText, ListItemIcon } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
-import { Link } from 'react-router-dom';
 import { SideBarContainer } from './NavbarComponents.styled';
 
 const NavbarDrawer = ({ sideBarstate, toggleDrawer, favoritesItem }) => {

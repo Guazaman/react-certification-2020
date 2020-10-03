@@ -2,9 +2,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
-import { SearchContext } from '../../state';
-import { ListComponent } from '../../components';
-import { useAuth } from '../../providers/Auth';
 import {
   VideoDetailsContainer,
   VideoDetailsCurrent,
@@ -14,6 +11,9 @@ import {
   CurrentOptionsContainer,
   CurrentVideoDesc,
 } from './VideoDetails.styled';
+import { SearchContext } from '../../state';
+import { ListComponent } from '../../components';
+import { useAuth } from '../../providers/Auth';
 import YoutubeApi from '../../api/YoutubeApi';
 
 const VideoDetailsPage = () => {
