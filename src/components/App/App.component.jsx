@@ -1,6 +1,7 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { NavbarComponent, PrivateComponent } from '../index';
+import NavbarComponent from '../Navbar';
+import PrivateComponent from '../Private';
 import { HomePage, NotFoundPage, FavoritesPage, VideoDetailsPage } from '../../pages';
 import AuthProvider from '../../providers/Auth';
 import YoutubeApi from '../../api/YoutubeApi';
