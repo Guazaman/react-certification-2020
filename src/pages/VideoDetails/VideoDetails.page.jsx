@@ -14,13 +14,14 @@ import {
   CurrentOptionsContainer,
   CurrentVideoDesc,
 } from './VideoDetails.styled';
+import YoutubeApi from '../../api/YoutubeApi';
 
 const VideoDetailsPage = () => {
   const history = useHistory();
-  const videos = JSON.parse(localStorage.getItem('videos'));
   const defaultVideo = { snippet: { title: '', description: '' } };
   const { currentVideo, dispatch, favoritesVideos } = useContext(SearchContext);
   const [isFavorite, setFavorite] = useState(false);
+  const [relatedVideos, setRelatedVideos] = useState([]);
   const { videoId } = useParams();
   const { authenticated } = useAuth();
 
@@ -35,6 +36,15 @@ const VideoDetailsPage = () => {
       favoritesVideos.favorites.length &&
       favoritesVideos.favorites.some((video) => video.id.videoId === videoId)
     );
+  };
+
+  const searchRelatedVideos = async (searchTerm) => {
+    const response = await YoutubeApi.get('/search', {
+      params: {
+        relatedToVideoId: searchTerm,
+      },
+    });
+    setRelatedVideos(response.data.items);
   };
 
   const addToFavorites = () => {
@@ -60,9 +70,23 @@ const VideoDetailsPage = () => {
     setFavorite(checkFavorite);
   }, [videoId]);
 
+  useEffect(() => {
+    searchRelatedVideos(videoId);
+  }, [videoId]);
+
   if (currentVideo === null) {
     history.push('/');
   }
+
+  const showFavoritesButton = isFavorite ? (
+    <Button variant="contained" onClick={removeToFavorites}>
+      Remove from Favorites
+    </Button>
+  ) : (
+    <Button variant="contained" onClick={addToFavorites}>
+      Add to Favorites
+    </Button>
+  );
 
   return (
     <VideoDetailsContainer>
@@ -70,20 +94,12 @@ const VideoDetailsPage = () => {
         <IFrameVideo src={`https://www.youtube.com/embed/${videoId}`} />
         <CurrentOptionsContainer>
           <CurrentVideoTitle>{title}</CurrentVideoTitle>
-          {isFavorite ? (
-            <Button variant="contained" onClick={removeToFavorites}>
-              Remove from Favorites
-            </Button>
-          ) : (
-            <Button variant="contained" onClick={addToFavorites}>
-              Add to Favorites
-            </Button>
-          )}
+          {authenticated ? showFavoritesButton : null}
         </CurrentOptionsContainer>
         <CurrentVideoDesc>{description}</CurrentVideoDesc>
       </VideoDetailsCurrent>
       <VideoDetailsList>
-        <ListComponent videos={videos} detailsView />
+        <ListComponent videos={relatedVideos} detailsView />
       </VideoDetailsList>
     </VideoDetailsContainer>
   );

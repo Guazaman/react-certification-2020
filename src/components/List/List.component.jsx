@@ -16,11 +16,8 @@ const List = ({ videos, detailsView }) => {
                 high: { url },
               },
             },
-            id,
+            id: { videoId },
           } = video;
-
-          const videoId = id.videoId ? id.videoId : id.channelId;
-
           return (
             <ListCardComponent
               title={title}

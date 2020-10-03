@@ -18,7 +18,6 @@ const App = () => {
       },
     });
     setVideos(response.data.items);
-    localStorage.setItem('videos', JSON.stringify(response.data.items));
   };
 
   useEffect(() => {
