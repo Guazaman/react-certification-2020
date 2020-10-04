@@ -26,13 +26,13 @@ const ListCard = ({ title, description, url, videoId, detailsView }) => {
       <Link to={`/video-details/${videoId}`}>
         {detailsView ? (
           <CardContainer onClick={onListCardClick}>
-            <CardImage src={url} />
+            <CardImage src={url} alt={url} />
             <CardTitle>{title}</CardTitle>
           </CardContainer>
         ) : (
           <Card onClick={onListCardClick}>
             <CardActionArea>
-              <CardMedia component="img" height="140" image={url} />
+              <CardMedia component="img" height="140" image={url} alt={url} />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                   {title}
