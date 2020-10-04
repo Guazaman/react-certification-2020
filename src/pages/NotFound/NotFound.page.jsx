@@ -7,8 +7,8 @@ import { NotFoundPNG } from '../../images';
 const NotFoundPage = () => {
   return (
     <>
-      <NotFoundImage src={NotFoundPNG} />
-      <NotFoundText>Sorry, we couldn't find this Page.</NotFoundText>
+      <NotFoundImage src={NotFoundPNG} alt="Not found image" />
+      <NotFoundText>Sorry, we could not find this Page.</NotFoundText>
       <Link to="/">
         <NotFoundText>Back To Home</NotFoundText>
       </Link>
