@@ -91,12 +91,15 @@ const VideoDetailsPage = () => {
   return (
     <VideoDetailsContainer>
       <VideoDetailsCurrent>
-        <IFrameVideo src={`https://www.youtube.com/embed/${videoId}`} />
+        <IFrameVideo
+          src={`https://www.youtube.com/embed/${videoId}`}
+          data-testid="iframe video"
+        />
         <CurrentOptionsContainer>
-          <CurrentVideoTitle>{title}</CurrentVideoTitle>
+          <CurrentVideoTitle data-testid="title video">{title}</CurrentVideoTitle>
           {authenticated ? showFavoritesButton : null}
         </CurrentOptionsContainer>
-        <CurrentVideoDesc>{description}</CurrentVideoDesc>
+        <CurrentVideoDesc data-testid="desc video">{description}</CurrentVideoDesc>
       </VideoDetailsCurrent>
       <VideoDetailsList>
         <ListComponent videos={relatedVideos} detailsView />
