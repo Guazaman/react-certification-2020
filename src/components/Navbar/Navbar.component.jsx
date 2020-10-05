@@ -15,7 +15,7 @@ import { SearchBar, Menu, Drawer } from './NavbarComponents';
 import { Separator, UserIcon } from './Navbar.styled';
 import { useAuth } from '../../providers/Auth';
 import { SearchContext } from '../../state';
-import { USER_WIZELINE_IMAGE } from '../../utils/constants';
+import { WizelinePNG } from '../../images';
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -63,7 +63,7 @@ const Navbar = () => {
 
   const showSearchBar = pathname === '/' ? <SearchBar onKeyUp={onKeyUp} /> : null;
   const showUserIcon = authenticated ? (
-    <UserIcon src={USER_WIZELINE_IMAGE} data-testid="logged-icon" />
+    <UserIcon src={WizelinePNG} data-testid="logged-icon" />
   ) : (
     <AccountCircle data-testid="incognit-icon" />
   );
