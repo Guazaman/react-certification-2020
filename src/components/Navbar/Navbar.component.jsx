@@ -63,9 +63,9 @@ const Navbar = () => {
 
   const showSearchBar = pathname === '/' ? <SearchBar onKeyUp={onKeyUp} /> : null;
   const showUserIcon = authenticated ? (
-    <UserIcon src={USER_WIZELINE_IMAGE} />
+    <UserIcon src={USER_WIZELINE_IMAGE} data-testid="logged-icon" />
   ) : (
-    <AccountCircle />
+    <AccountCircle data-testid="incognit-icon" />
   );
   const showLogButton = authenticated ? (
     <MenuItem onClick={deAuthenticate}>Logout</MenuItem>
@@ -85,7 +85,12 @@ const Navbar = () => {
     <>
       <AppBar position="static" style={{ background: '#FB503A' }}>
         <Toolbar>
-          <IconButton edge="start" color="inherit" onClick={toggleDrawer(true)}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            onClick={toggleDrawer(true)}
+            data-testid="hamburguer-menu"
+          >
             <MenuIcon />
           </IconButton>
           {showSearchBar}

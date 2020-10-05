@@ -5,7 +5,12 @@
   "jest": {
     "coveragePathIgnorePatterns": [
       "<rootDir>/build/",
-      "<rootDir>/node_modules/"
+      "<rootDir>/node_modules/",
+      "src/images",
+      "src/pages/index.jsx",
+      "src/components/index.jsx",
+      "src/GlobalStyles.jsx",
+      "src/index.jsx"
     ]
   },
   "dependencies": {
