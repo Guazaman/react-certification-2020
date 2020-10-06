@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import NavBar from './NavBar.component';
 import { useAuth } from '../../providers/Auth';
 
@@ -15,9 +15,9 @@ describe('Should render the navbar', () => {
 
   beforeEach(() => {
     wrapper = render(
-      <BrowserRouter>
+      <HashRouter>
         <NavBar />
-      </BrowserRouter>
+      </HashRouter>
     );
   });
 

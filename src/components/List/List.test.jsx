@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import ListComponent from './List.component';
 
 const videos = [
@@ -31,9 +31,9 @@ describe('Test the List Card Component with detailsView false', () => {
 
   beforeEach(() => {
     wrapper = render(
-      <BrowserRouter>
+      <HashRouter>
         <ListComponent videos={videos} detailsView={false} />
-      </BrowserRouter>
+      </HashRouter>
     );
   });
 
@@ -51,9 +51,9 @@ describe('Test the List Card Component with detailsView true', () => {
 
   beforeEach(() => {
     wrapper = render(
-      <BrowserRouter>
+      <HashRouter>
         <ListComponent videos={videos} detailsView />
-      </BrowserRouter>
+      </HashRouter>
     );
   });
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { HashRouter, Link } from 'react-router-dom';
 import { ListItemText, ListItemIcon } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Drawer from './Drawer';
@@ -26,9 +26,9 @@ describe('Test the Drawer open', () => {
 
   beforeEach(() => {
     wrapper = render(
-      <BrowserRouter>
+      <HashRouter>
         <Drawer sideBarstate toggleDrawer={jest.fn()} favoritesItem={showFavorites} />
-      </BrowserRouter>
+      </HashRouter>
     );
   });
 

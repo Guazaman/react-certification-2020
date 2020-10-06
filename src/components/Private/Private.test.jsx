@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import PrivateComponent from './Private.component';
 import { useAuth } from '../../providers/Auth';
@@ -9,11 +9,11 @@ jest.mock('../../providers/Auth', () => ({
 }));
 
 const privateWrapper = (
-  <BrowserRouter>
+  <HashRouter>
     <PrivateComponent>
       <div>Some test component</div>
     </PrivateComponent>
-  </BrowserRouter>
+  </HashRouter>
 );
 
 describe('Test private routes', () => {

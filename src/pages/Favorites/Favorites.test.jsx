@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import Favorites from './Favorites.page';
 
 jest.mock('react', () => ({
@@ -15,9 +15,9 @@ describe('Test the Favorites page', () => {
 
   beforeEach(() => {
     wrapper = render(
-      <BrowserRouter>
+      <HashRouter>
         <Favorites />
-      </BrowserRouter>
+      </HashRouter>
     );
   });
 

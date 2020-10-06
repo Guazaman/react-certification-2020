@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import NotFound from './NotFound.page';
 
 describe('Test the not found page', () => {
@@ -8,9 +8,9 @@ describe('Test the not found page', () => {
 
   beforeEach(() => {
     wrapper = render(
-      <BrowserRouter>
+      <HashRouter>
         <NotFound />
-      </BrowserRouter>
+      </HashRouter>
     );
   });
 
@@ -35,6 +35,6 @@ describe('Test the not found page', () => {
     const anchor = wrapper.getByText('Back To Home');
     const container = anchor.closest('a');
     expect(anchor).not.toBeNull();
-    expect(container.getAttribute('href')).toBe('/');
+    expect(container.getAttribute('href')).toBe('#/');
   });
 });

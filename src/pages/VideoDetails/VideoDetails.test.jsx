@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import VideoDetails from './VideoDetails.page';
 import AuthProvider from '../../providers/Auth';
 
@@ -16,11 +16,11 @@ describe('Test the Favorites page', () => {
 
   beforeEach(() => {
     wrapper = render(
-      <BrowserRouter>
+      <HashRouter>
         <AuthProvider>
           <VideoDetails />
         </AuthProvider>
-      </BrowserRouter>
+      </HashRouter>
     );
   });
 

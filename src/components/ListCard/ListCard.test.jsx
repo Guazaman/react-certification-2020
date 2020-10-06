@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import ListCardComponent from './ListCard.component';
 
 describe('Test the List Card Component', () => {
@@ -8,7 +8,7 @@ describe('Test the List Card Component', () => {
 
   beforeEach(() => {
     wrapper = render(
-      <BrowserRouter>
+      <HashRouter>
         <ListCardComponent
           title="test title card"
           description="test description card"
@@ -17,7 +17,7 @@ describe('Test the List Card Component', () => {
           detailsView={false}
           key="test key"
         />
-      </BrowserRouter>
+      </HashRouter>
     );
   });
 
@@ -41,7 +41,7 @@ describe('Test the List Card Component', () => {
     const text = wrapper.getByText('test title card');
     const container = text.closest('a');
     expect(text).not.toBeNull();
-    expect(container.getAttribute('href')).toBe('/video-details/testVideoID');
+    expect(container.getAttribute('href')).toBe('#/video-details/testVideoID');
   });
 
   it('Should have a image', () => {
@@ -57,7 +57,7 @@ describe('Test the List Card Details Component', () => {
 
   beforeEach(() => {
     wrapper = render(
-      <BrowserRouter>
+      <HashRouter>
         <ListCardComponent
           title="test title card"
           description="test description card"
@@ -66,7 +66,7 @@ describe('Test the List Card Details Component', () => {
           detailsView
           key="test key"
         />
-      </BrowserRouter>
+      </HashRouter>
     );
   });
 
@@ -84,7 +84,7 @@ describe('Test the List Card Details Component', () => {
     const text = wrapper.getByText('test title card');
     const container = text.closest('a');
     expect(text).not.toBeNull();
-    expect(container.getAttribute('href')).toBe('/video-details/testVideoID');
+    expect(container.getAttribute('href')).toBe('#/video-details/testVideoID');
   });
 
   it('Should have a image', () => {
