@@ -1,5 +1,5 @@
 import React, { useState, useReducer, useEffect } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 import NavbarComponent from '../Navbar';
 import PrivateComponent from '../Private';
 import { HomePage, NotFoundPage, FavoritesPage, VideoDetailsPage } from '../../pages';
@@ -40,7 +40,7 @@ const App = () => {
         dispatch,
       }}
     >
-      <BrowserRouter>
+      <HashRouter>
         <AuthProvider>
           <NavbarComponent />
           <Switch>
@@ -52,7 +52,7 @@ const App = () => {
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </AuthProvider>
-      </BrowserRouter>
+      </HashRouter>
     </SearchContext.Provider>
   );
 };
